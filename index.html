@@ -141,13 +141,19 @@
                         <!-- Small scanning shield animation -->
                         <div class="relative w-8 h-8 flex items-center justify-center shrink-0">
                             <!-- Radar rings -->
-                            <div class="absolute inset-0 rounded-full border border-dashed border-blue-500/35 animate-[spin_10s_linear_infinite]"></div>
+                            <div
+                                class="absolute inset-0 rounded-full border border-dashed border-blue-500/35 animate-[spin_10s_linear_infinite]">
+                            </div>
                             <!-- Shield SVG -->
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cn-blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="filter drop-shadow-[0_0_4px_rgba(1,14,208,0.5)]">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cn-blue)"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="filter drop-shadow-[0_0_4px_rgba(1,14,208,0.5)]">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
                             <!-- Scan line -->
-                            <div class="absolute w-5 h-[1.5px] bg-cyan-400 opacity-80 shadow-[0_0_4px_cyan] animate-[scanLaserSmall_2s_ease-in-out_infinite]"></div>
+                            <div
+                                class="absolute w-5 h-[1.5px] bg-cyan-400 opacity-80 shadow-[0_0_4px_cyan] animate-[scanLaserSmall_2s_ease-in-out_infinite]">
+                            </div>
                         </div>
                     </div>
                     <h1 class="hero-title display mb-5 reveal" data-reveal>Cybersecurity that moves at the <span
@@ -214,7 +220,7 @@
                                 <div>
                                     <label class="text-xs font-medium block mb-1.5"
                                         style="color:var(--text-muted);">Full Name *</label>
-                                    <input type="text" name="fullName" class="form-input" placeholder="John Doe"
+                                    <input type="text" name="fullName" class="form-input" placeholder="Ahmed Mohamed"
                                         autocomplete="name" />
                                     <div class="err-msg" data-err="fullName"><svg width="12" height="12"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -456,20 +462,37 @@
                 <p class="text-base reveal" data-reveal style="color:var(--text-muted);">Select a service to explore how
                     CyberNas delivers it.</p>
             </div>
-            <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-                <div class="lg:col-span-5 glass rounded-2xl p-3 reveal-l" data-reveal>
-                    <div id="serviceList" class="flex flex-col"></div>
+            <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+                <!-- LEFT COLUMN: Desktop List / Mobile Dropdown -->
+                <div class="lg:col-span-5 flex flex-col justify-between reveal-l" data-reveal>
+                    <!-- Mobile View Dropdown -->
+                    <div class="block lg:hidden w-full mb-4">
+                        <label for="mobileServiceSelect" class="text-xs font-semibold block mb-2"
+                            style="color:var(--text-muted); font-family: 'Space Grotesk'; text-transform: uppercase; letter-spacing: 0.05em;">Select
+                            a Service</label>
+                        <div class="relative">
+                            <select id="mobileServiceSelect" class="form-input py-3.5 pr-10 font-semibold"></select>
+                        </div>
+                    </div>
+
+                    <!-- Desktop View List (hidden on mobile, scrollable on desktop) -->
+                    <div class="hidden lg:flex flex-col glass rounded-2xl p-3 h-[650px] w-full overflow-hidden">
+                        <div id="serviceList" class="flex flex-col overflow-y-auto h-full pr-1"></div>
+                    </div>
                 </div>
-                <div class="lg:col-span-7 reveal-r" data-reveal>
-                    <div class="glass rounded-2xl p-6 lg:p-8 relative overflow-hidden h-full">
+
+                <!-- RIGHT COLUMN: Service Details Card -->
+                <div class="lg:col-span-7 reveal-r w-full" data-reveal>
+                    <div
+                        class="glass rounded-2xl p-6 lg:p-8 relative overflow-hidden h-auto lg:h-[650px] flex flex-col justify-center">
                         <div class="cyber-grid absolute inset-0" style="opacity:.4;"></div>
                         <div class="scan-line"></div>
-                        <div class="relative z-10 flex flex-col items-center justify-center h-full">
+                        <div class="relative z-10 flex flex-col items-center justify-center">
                             <div id="serviceIllustration" class="svc-illustration"></div>
                             <div class="text-center mt-6">
                                 <h3 class="display text-xl sm:text-2xl font-bold mb-2" id="serviceName">Cybersecurity
                                     Consulting</h3>
-                                <p class="text-sm max-w-lg mx-auto leading-relaxed" id="serviceDesc"
+                                <p class="text-sm max-w-lg mx-auto leading-relaxed lg:min-h-[50px]" id="serviceDesc"
                                     style="color:var(--text-muted);">Expert guidance to design and implement security
                                     strategies aligned with your business goals.</p>
                                 <div class="flex flex-wrap justify-center gap-2 mt-5" id="serviceTags"></div>

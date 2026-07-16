@@ -1147,3 +1147,26 @@
                 opacity: 0.95;
             }
         }
+
+        /* === Premium Scrollbar for Service List === */
+        #serviceList::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #serviceList::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #serviceList::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        #serviceList::-webkit-scrollbar-thumb:hover {
+            background: var(--cn-blue);
+        }
+
+        #serviceList {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }

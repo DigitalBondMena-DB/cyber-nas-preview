@@ -46,10 +46,55 @@ const services = [
     { name: 'AI Security', short: 'Secure AI systems & models', tags: ['ML', 'LLM', 'Adversarial'], desc: 'Securing AI systems, models, and pipelines against emerging threats — from data poisoning and model extraction to prompt injection and adversarial inputs, without slowing innovation.', icon: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>' },
     { name: 'AWS Security', short: 'Hardened Amazon Web Services', tags: ['IAM', 'Config', 'GuardDuty'], desc: 'Hardening and monitoring workloads on Amazon Web Services following AWS best practices — covering IAM, network segmentation, encryption, logging, and native security services.', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><path d="M12 13v4"/><circle cx="12" cy="11" r="1"/>' }
 ];
-const svcList = document.getElementById('serviceList'), svcIllustration = document.getElementById('serviceIllustration'), svcName = document.getElementById('serviceName'), svcDesc = document.getElementById('serviceDesc'), svcTags = document.getElementById('serviceTags');
-function renderServiceList() { svcList.innerHTML = services.map((s, i) => `<div class="service-item ${i === 0 ? 'active' : ''}" data-idx="${i}" role="button" tabindex="0"><span class="service-num">${String(i + 1).padStart(2, '0')}</span><span class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span><span class="flex-1"><span class="font-semibold text-sm block">${s.name}</span><span class="text-xs" style="color:var(--text-muted);">${s.short}</span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;"><polyline points="9 18 15 12 9 6"/></svg></div>`).join(''); svcList.querySelectorAll('.service-item').forEach(item => { item.addEventListener('click', () => selectService(parseInt(item.dataset.idx))); item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectService(parseInt(item.dataset.idx)); } }); }); }
+const svcList = document.getElementById('serviceList'), mobileSvcSelect = document.getElementById('mobileServiceSelect'), svcIllustration = document.getElementById('serviceIllustration'), svcName = document.getElementById('serviceName'), svcDesc = document.getElementById('serviceDesc'), svcTags = document.getElementById('serviceTags');
+function renderServiceList() {
+    if (svcList) {
+        svcList.innerHTML = services.map((s, i) => `<div class="service-item ${i === 0 ? 'active' : ''}" data-idx="${i}" role="button" tabindex="0"><span class="service-num">${String(i + 1).padStart(2, '0')}</span><span class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span><span class="flex-1"><span class="font-semibold text-sm block">${s.name}</span><span class="text-xs" style="color:var(--text-muted);">${s.short}</span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;"><polyline points="9 18 15 12 9 6"/></svg></div>`).join('');
+        svcList.querySelectorAll('.service-item').forEach(item => {
+            item.addEventListener('click', () => selectService(parseInt(item.dataset.idx)));
+            item.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectService(parseInt(item.dataset.idx));
+                }
+            });
+        });
+    }
+    if (mobileSvcSelect) {
+        mobileSvcSelect.innerHTML = services.map((s, i) => `<option value="${i}">${String(i + 1).padStart(2, '0')}. ${s.name}</option>`).join('');
+        mobileSvcSelect.addEventListener('change', e => {
+            selectService(parseInt(e.target.value));
+        });
+    }
+}
 function buildIllustration(svc, idx) { const cx = 200, cy = 200, nodes = []; for (let i = 0; i < 8; i++) { const ang = (i / 8) * Math.PI * 2, r = 130 + (i % 2) * 15, x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r; nodes.push({ x, y, delay: (i * .3).toFixed(1) }); } return `<svg viewBox="0 0 400 400" class="w-full h-full illu-anim" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#010ED0" stop-opacity="0.5"/><stop offset="100%" stop-color="#010ED0" stop-opacity="0"/></radialGradient><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#010ED0"/><stop offset="100%" stop-color="#3a44e8"/></linearGradient></defs><circle cx="200" cy="200" r="180" fill="url(#ig)"/><g style="transform-origin:200px 200px;animation:rotate-slow 30s linear infinite;"><circle cx="200" cy="200" r="155" fill="none" stroke="#010ED0" stroke-width="1" stroke-dasharray="4 8" opacity="0.3"/></g><circle cx="200" cy="200" r="120" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.2"/>${nodes.map(n => `<line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}" stroke="#010ED0" stroke-width="1" opacity="0.25"/>`).join('')}${nodes.map(n => `<g class="net-node" style="animation-delay:${n.delay}s;"><circle cx="${n.x}" cy="${n.y}" r="5" fill="#010ED0" opacity="0.7"/><circle cx="${n.x}" cy="${n.y}" r="10" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.4"/></g>`).join('')}<circle cx="200" cy="200" r="75" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="2"/><g transform="translate(200,200)"><g transform="translate(-32,-32) scale(2.7)" stroke="url(#lg)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${svc.icon}</g></g><g transform="translate(310,310)"><circle r="22" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="1.5"/><text x="0" y="5" text-anchor="middle" font-family="Space Grotesk" font-size="13" font-weight="700" fill="var(--cn-blue)">${String(idx + 1).padStart(2, '0')}</text></g></svg>`; }
-function selectService(idx) { document.querySelectorAll('.service-item').forEach((el, i) => el.classList.toggle('active', i === idx)); const s = services[idx]; svcIllustration.innerHTML = buildIllustration(s, idx); svcName.textContent = s.name; svcDesc.textContent = s.desc; svcTags.innerHTML = s.tags.map(t => `<span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:var(--accent-glow);color:var(--cn-blue);border:1px solid var(--border);">${t}</span>`).join(''); }
+function selectService(idx) {
+    if (svcList) {
+        svcList.querySelectorAll('.service-item').forEach((el, i) => el.classList.toggle('active', i === idx));
+        // Auto scroll selected desktop item into view inside scrollable container
+        const activeItem = svcList.querySelector(`.service-item[data-idx="${idx}"]`);
+        if (activeItem) {
+            const containerHeight = svcList.clientHeight;
+            const itemTop = activeItem.offsetTop;
+            const itemHeight = activeItem.clientHeight;
+            const scrollPos = svcList.scrollTop;
+            if (itemTop < scrollPos || itemTop + itemHeight > scrollPos + containerHeight) {
+                svcList.scrollTo({
+                    top: itemTop - (containerHeight / 2) + (itemHeight / 2),
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+    if (mobileSvcSelect && mobileSvcSelect.value !== String(idx)) {
+        mobileSvcSelect.value = String(idx);
+    }
+    const s = services[idx];
+    if (svcIllustration) svcIllustration.innerHTML = buildIllustration(s, idx);
+    if (svcName) svcName.textContent = s.name;
+    if (svcDesc) svcDesc.textContent = s.desc;
+    if (svcTags) svcTags.innerHTML = s.tags.map(t => `<span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:var(--accent-glow);color:var(--cn-blue);border:1px solid var(--border);">${t}</span>`).join('');
+}
 renderServiceList(); selectService(0);
 
 /* ===== PARTNERS & CLIENTS ===== */
