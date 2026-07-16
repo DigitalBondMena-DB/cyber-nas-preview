@@ -83,9 +83,10 @@
         }
 
         .logo-img {
+            object-fit: contain;
             filter: var(--logo-filter);
             transition: filter .4s;
-            max-height: 32px;
+            max-height: 40px;
             width: auto;
         }
 
@@ -452,8 +453,8 @@
         }
 
         .scroll-top .logo-img {
-            width: 30px;
-            height: 30px;
+            width: 45px;
+            height: 45px;
             filter: brightness(0) invert(1);
         }
 
