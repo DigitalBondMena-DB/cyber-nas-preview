@@ -9,15 +9,13 @@
         content="CyberNas delivers enterprise cybersecurity, compliance, cloud security, and managed detection & response services across the Kingdom and beyond." />
     <meta name="theme-color" content="#010ED0" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
 
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/output.css">
 </head>
 
 <body>
@@ -301,7 +299,7 @@
                                 stays private. We respond within one business day.</p>
                         </form>
                         <div class="success-state absolute inset-0 flex-col items-center justify-center text-center px-6 rounded-2xl"
-                            id="successState" style="background:var(--card-bg);backdrop-filter:blur(20px);">
+                            id="successState" style="background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
                             <div class="check-circle w-16 h-16 rounded-full flex items-center justify-center mb-4"
                                 style="background:linear-gradient(135deg,#010ED0,#3a44e8);box-shadow:0 12px 32px -8px rgba(1,14,208,.6);">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff"
@@ -657,7 +655,7 @@
                             class="btn-primary w-full mt-5 py-3.5 rounded-lg font-semibold text-sm magnetic">Send
                             Message</button>
                         <div class="success-state absolute inset-0 flex-col items-center justify-center text-center px-6 rounded-2xl"
-                            id="contactSuccess" style="background:var(--card-bg);backdrop-filter:blur(20px);">
+                            id="contactSuccess" style="background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
                             <div class="check-circle w-14 h-14 rounded-full flex items-center justify-center mb-3"
                                 style="background:linear-gradient(135deg,#010ED0,#3a44e8);">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff"
@@ -756,7 +754,8 @@
 
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
         <img src="https://z-cdn-media.chatglm.cn/files/80634540-3392-4547-bfd2-aa83f90ed44e.png?auth_key=1884207994-e8cdea0dd7f64d92b4d4f04432ca86f6-0-db118a7a5597d8a35edb28efa88328e2"
-            alt="CyberNas" class="logo-img" />
+            alt="CyberNas" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polyline points="18 15 12 9 6 15"/></svg>
     </button>
 
     <script src="./js/main.js"></script>

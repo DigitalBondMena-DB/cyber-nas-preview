@@ -1,0 +1,14 @@
+{
+  "name": "cyber-nas-preview",
+  "version": "1.0.0",
+  "description": "CyberNas Enterprise Cybersecurity Solutions",
+  "main": "index.html",
+  "scripts": {
+    "build:css": "npx.cmd @tailwindcss/cli -i ./css/input.css -o ./css/output.css --minify",
+    "watch:css": "npx.cmd @tailwindcss/cli -i ./css/input.css -o ./css/output.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  }
+}

@@ -5,26 +5,85 @@
     const theme = stored || (prefersDark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);
     updateIcon(theme);
-    function updateIcon(t) { const i = document.getElementById('themeIcon'); if (!i) return; t === 'dark' ? i.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>' : i.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>'; }
-    document.getElementById('themeToggle').addEventListener('click', () => { const c = document.documentElement.getAttribute('data-theme'); const n = c === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); localStorage.setItem('cybernas-theme', n); updateIcon(n); });
+    function updateIcon(t) {
+        const i = document.getElementById('themeIcon');
+        if (!i) return;
+        t === 'dark'
+            ? i.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+            : i.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+    }
+    const toggleBtn = document.getElementById('themeToggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const c = document.documentElement.getAttribute('data-theme');
+            const n = c === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', n);
+            localStorage.setItem('cybernas-theme', n);
+            updateIcon(n);
+        });
+    }
 })();
 
 /* ===== MOBILE MENU ===== */
-const menuBtn = document.getElementById('menuBtn'), closeMenu = document.getElementById('closeMenu'), mobileMenu = document.getElementById('mobileMenu'), mobileOverlay = document.getElementById('mobileOverlay');
-function openMenu() { mobileMenu.classList.add('open'); mobileOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
-function closeMenuFn() { mobileMenu.classList.remove('open'); mobileOverlay.classList.remove('open'); document.body.style.overflow = ''; }
-menuBtn.addEventListener('click', openMenu); closeMenu.addEventListener('click', closeMenuFn); mobileOverlay.addEventListener('click', closeMenuFn);
+const menuBtn = document.getElementById('menuBtn');
+const closeMenu = document.getElementById('closeMenu');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileOverlay = document.getElementById('mobileOverlay');
+
+function openMenu() {
+    if (mobileMenu) mobileMenu.classList.add('open');
+    if (mobileOverlay) mobileOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeMenuFn() {
+    if (mobileMenu) mobileMenu.classList.remove('open');
+    if (mobileOverlay) mobileOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+if (menuBtn) menuBtn.addEventListener('click', openMenu);
+if (closeMenu) closeMenu.addEventListener('click', closeMenuFn);
+if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenuFn);
 document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenuFn));
 
 /* ===== PARTICLES ===== */
-(function () { const c = document.getElementById('heroParticles'); if (!c) return; for (let i = 0; i < 20; i++) { const p = document.createElement('div'); p.className = 'particle'; const s = Math.random() * 4 + 1.5; p.style.width = s + 'px'; p.style.height = s + 'px'; p.style.left = Math.random() * 100 + '%'; p.style.top = Math.random() * 100 + '%'; p.style.opacity = (Math.random() * .5 + .2).toFixed(2); p.style.animationDuration = (Math.random() * 6 + 6) + 's'; p.style.animationDelay = (Math.random() * 5) + 's'; if (Math.random() > .6) p.style.background = 'var(--cn-light-blue)'; c.appendChild(p); } })();
+(function () {
+    const c = document.getElementById('heroParticles');
+    if (!c || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const s = Math.random() * 4 + 1.5;
+        p.style.width = s + 'px';
+        p.style.height = s + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.opacity = (Math.random() * .5 + .2).toFixed(2);
+        p.style.animationDuration = (Math.random() * 6 + 6) + 's';
+        p.style.animationDelay = (Math.random() * 5) + 's';
+        if (Math.random() > .6) p.style.background = 'var(--cn-light-blue)';
+        fragment.appendChild(p);
+    }
+    c.appendChild(fragment);
+})();
 
 /* ===== VIDEO PLAYER ===== */
-const videoPlayBtn = document.getElementById('videoPlayBtn'), videoPoster = document.getElementById('videoPoster'), videoPlayer = document.getElementById('videoPlayer');
-videoPlayBtn.addEventListener('click', () => {
-    videoPoster.style.opacity = '0'; videoPlayBtn.style.opacity = '0'; videoPlayBtn.style.pointerEvents = 'none';
-    setTimeout(() => { videoPoster.style.display = 'none'; videoPlayBtn.style.display = 'none'; videoPlayer.style.display = 'block'; videoPlayer.play(); }, 300);
-});
+const videoPlayBtn = document.getElementById('videoPlayBtn');
+const videoPoster = document.getElementById('videoPoster');
+const videoPlayer = document.getElementById('videoPlayer');
+if (videoPlayBtn && videoPoster && videoPlayer) {
+    videoPlayBtn.addEventListener('click', () => {
+        videoPoster.style.opacity = '0';
+        videoPlayBtn.style.opacity = '0';
+        videoPlayBtn.style.pointerEvents = 'none';
+        setTimeout(() => {
+            videoPoster.style.display = 'none';
+            videoPlayBtn.style.display = 'none';
+            videoPlayer.style.display = 'block';
+            videoPlayer.play().catch(() => {});
+        }, 300);
+    });
+}
 
 /* ===== SERVICES ===== */
 const services = [
@@ -46,7 +105,14 @@ const services = [
     { name: 'AI Security', short: 'Secure AI systems & models', tags: ['ML', 'LLM', 'Adversarial'], desc: 'Securing AI systems, models, and pipelines against emerging threats — from data poisoning and model extraction to prompt injection and adversarial inputs, without slowing innovation.', icon: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>' },
     { name: 'AWS Security', short: 'Hardened Amazon Web Services', tags: ['IAM', 'Config', 'GuardDuty'], desc: 'Hardening and monitoring workloads on Amazon Web Services following AWS best practices — covering IAM, network segmentation, encryption, logging, and native security services.', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><path d="M12 13v4"/><circle cx="12" cy="11" r="1"/>' }
 ];
-const svcList = document.getElementById('serviceList'), mobileSvcSelect = document.getElementById('mobileServiceSelect'), svcIllustration = document.getElementById('serviceIllustration'), svcName = document.getElementById('serviceName'), svcDesc = document.getElementById('serviceDesc'), svcTags = document.getElementById('serviceTags');
+
+const svcList = document.getElementById('serviceList');
+const mobileSvcSelect = document.getElementById('mobileServiceSelect');
+const svcIllustration = document.getElementById('serviceIllustration');
+const svcName = document.getElementById('serviceName');
+const svcDesc = document.getElementById('serviceDesc');
+const svcTags = document.getElementById('serviceTags');
+
 function renderServiceList() {
     if (svcList) {
         svcList.innerHTML = services.map((s, i) => `<div class="service-item ${i === 0 ? 'active' : ''}" data-idx="${i}" role="button" tabindex="0"><span class="service-num">${String(i + 1).padStart(2, '0')}</span><span class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span><span class="flex-1"><span class="font-semibold text-sm block">${s.name}</span><span class="text-xs" style="color:var(--text-muted);">${s.short}</span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;"><polyline points="9 18 15 12 9 6"/></svg></div>`).join('');
@@ -67,11 +133,19 @@ function renderServiceList() {
         });
     }
 }
-function buildIllustration(svc, idx) { const cx = 200, cy = 200, nodes = []; for (let i = 0; i < 8; i++) { const ang = (i / 8) * Math.PI * 2, r = 130 + (i % 2) * 15, x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r; nodes.push({ x, y, delay: (i * .3).toFixed(1) }); } return `<svg viewBox="0 0 400 400" class="w-full h-full illu-anim" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#010ED0" stop-opacity="0.5"/><stop offset="100%" stop-color="#010ED0" stop-opacity="0"/></radialGradient><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#010ED0"/><stop offset="100%" stop-color="#3a44e8"/></linearGradient></defs><circle cx="200" cy="200" r="180" fill="url(#ig)"/><g style="transform-origin:200px 200px;animation:rotate-slow 30s linear infinite;"><circle cx="200" cy="200" r="155" fill="none" stroke="#010ED0" stroke-width="1" stroke-dasharray="4 8" opacity="0.3"/></g><circle cx="200" cy="200" r="120" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.2"/>${nodes.map(n => `<line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}" stroke="#010ED0" stroke-width="1" opacity="0.25"/>`).join('')}${nodes.map(n => `<g class="net-node" style="animation-delay:${n.delay}s;"><circle cx="${n.x}" cy="${n.y}" r="5" fill="#010ED0" opacity="0.7"/><circle cx="${n.x}" cy="${n.y}" r="10" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.4"/></g>`).join('')}<circle cx="200" cy="200" r="75" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="2"/><g transform="translate(200,200)"><g transform="translate(-32,-32) scale(2.7)" stroke="url(#lg)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${svc.icon}</g></g><g transform="translate(310,310)"><circle r="22" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="1.5"/><text x="0" y="5" text-anchor="middle" font-family="Space Grotesk" font-size="13" font-weight="700" fill="var(--cn-blue)">${String(idx + 1).padStart(2, '0')}</text></g></svg>`; }
+
+function buildIllustration(svc, idx) {
+    const cx = 200, cy = 200, nodes = [];
+    for (let i = 0; i < 8; i++) {
+        const ang = (i / 8) * Math.PI * 2, r = 130 + (i % 2) * 15, x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+        nodes.push({ x, y, delay: (i * .3).toFixed(1) });
+    }
+    return `<svg viewBox="0 0 400 400" class="w-full h-full illu-anim" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#010ED0" stop-opacity="0.5"/><stop offset="100%" stop-color="#010ED0" stop-opacity="0"/></radialGradient><linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#010ED0"/><stop offset="100%" stop-color="#3a44e8"/></linearGradient></defs><circle cx="200" cy="200" r="180" fill="url(#ig)"/><g style="transform-origin:200px 200px;animation:rotate-slow 30s linear infinite;"><circle cx="200" cy="200" r="155" fill="none" stroke="#010ED0" stroke-width="1" stroke-dasharray="4 8" opacity="0.3"/></g><circle cx="200" cy="200" r="120" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.2"/>${nodes.map(n => `<line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}" stroke="#010ED0" stroke-width="1" opacity="0.25"/>`).join('')}${nodes.map(n => `<g class="net-node" style="animation-delay:${n.delay}s;"><circle cx="${n.x}" cy="${n.y}" r="5" fill="#010ED0" opacity="0.7"/><circle cx="${n.x}" cy="${n.y}" r="10" fill="none" stroke="#010ED0" stroke-width="1" opacity="0.4"/></g>`).join('')}<circle cx="200" cy="200" r="75" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="2"/><g transform="translate(200,200)"><g transform="translate(-32,-32) scale(2.7)" stroke="url(#lg)" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${svc.icon}</g></g><g transform="translate(310,310)"><circle r="22" fill="var(--bg-elevated)" stroke="url(#lg)" stroke-width="1.5"/><text x="0" y="5" text-anchor="middle" font-family="Space Grotesk" font-size="13" font-weight="700" fill="var(--cn-blue)">${String(idx + 1).padStart(2, '0')}</text></g></svg>`;
+}
+
 function selectService(idx) {
     if (svcList) {
         svcList.querySelectorAll('.service-item').forEach((el, i) => el.classList.toggle('active', i === idx));
-        // Auto scroll selected desktop item into view inside scrollable container
         const activeItem = svcList.querySelector(`.service-item[data-idx="${idx}"]`);
         if (activeItem) {
             const containerHeight = svcList.clientHeight;
@@ -95,11 +169,19 @@ function selectService(idx) {
     if (svcDesc) svcDesc.textContent = s.desc;
     if (svcTags) svcTags.innerHTML = s.tags.map(t => `<span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:var(--accent-glow);color:var(--cn-blue);border:1px solid var(--border);">${t}</span>`).join('');
 }
-renderServiceList(); selectService(0);
+renderServiceList();
+selectService(0);
 
 /* ===== PARTNERS & CLIENTS ===== */
-const partners = [{ name: 'CloudShield', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>' }, { name: 'ThreatGrid', icon: '<path d="M3 3v18h18"/><polyline points="7 14 11 10 14 13 21 6"/>' }, { name: 'SecureNet', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' }, { name: 'DataFort', icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' }, { name: 'CyberGuard', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>' }, { name: 'NetArmor', icon: '<path d="M12 2L4 6v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V6l-8-4z"/>' }, { name: 'ByteWall', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>' }, { name: 'InfoShield', icon: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>' }]; const clients = [{ name: 'Al Salam Bank', icon: '<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>' }, { name: 'Emirates Energy', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' }, { name: 'Royal Health', icon: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>' }, { name: 'Gulf Telecom', icon: '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>' }, { name: 'Falcon Aviation', icon: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>' }, { name: 'Pearl Logistics', icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>' }, { name: 'Desert Mining', icon: '<circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/>' }, { name: 'National Insurance', icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>' }];
-function renderLogos(arr, id) { document.getElementById(id).innerHTML = arr.map(p => `<div class="partner-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p.icon}</svg><span>${p.name}</span></div>`).join(''); }
+const partners = [{ name: 'CloudShield', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>' }, { name: 'ThreatGrid', icon: '<path d="M3 3v18h18"/><polyline points="7 14 11 10 14 13 21 6"/>' }, { name: 'SecureNet', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' }, { name: 'DataFort', icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' }, { name: 'CyberGuard', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>' }, { name: 'NetArmor', icon: '<path d="M12 2L4 6v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V6l-8-4z"/>' }, { name: 'ByteWall', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>' }, { name: 'InfoShield', icon: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>' }];
+const clients = [{ name: 'Al Salam Bank', icon: '<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>' }, { name: 'Emirates Energy', icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' }, { name: 'Royal Health', icon: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/>' }, { name: 'Gulf Telecom', icon: '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>' }, { name: 'Falcon Aviation', icon: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>' }, { name: 'Pearl Logistics', icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>' }, { name: 'Desert Mining', icon: '<circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83M16.62 12l-5.74 9.94"/>' }, { name: 'National Insurance', icon: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>' }];
+
+function renderLogos(arr, id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.innerHTML = arr.map(p => `<div class="partner-logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p.icon}</svg><span>${p.name}</span></div>`).join('');
+    }
+}
 renderLogos([...partners, ...clients], 'partnersGrid');
 
 /* ===== SOLUTIONS ===== */
@@ -111,7 +193,10 @@ const solutions = [
     { title: 'Risk Management', desc: 'Identifying, assessing, and mitigating threats before they impact your business.', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
     { title: 'Incident Response', desc: 'Rapid breach response, digital forensics, and recovery to minimize business disruption.', img: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80', icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' }
 ];
-document.getElementById('solutionsGrid').innerHTML = solutions.map((s, i) => `<div class="sol-card reveal" data-reveal><img src="${s.img}" alt="${s.title}" loading="lazy"/><div class="sol-overlay"></div><div class="sol-content"><div class="sol-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></div><h3 class="display text-lg font-bold mb-1.5">${s.title}</h3><p class="text-sm leading-relaxed opacity-90">${s.desc}</p></div></div>`).join('');
+const solGrid = document.getElementById('solutionsGrid');
+if (solGrid) {
+    solGrid.innerHTML = solutions.map((s, i) => `<div class="sol-card reveal" data-reveal><img src="${s.img}" alt="${s.title}" loading="lazy"/><div class="sol-overlay"></div><div class="sol-content"><div class="sol-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></div><h3 class="display text-lg font-bold mb-1.5">${s.title}</h3><p class="text-sm leading-relaxed opacity-90">${s.desc}</p></div></div>`).join('');
+}
 
 /* ===== METHODOLOGY ===== */
 const methodology = [
@@ -121,7 +206,10 @@ const methodology = [
     { num: '04', title: 'Defend', desc: 'Continuous monitoring, threat detection, and rapid incident response 24/7.', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
     { num: '05', title: 'Develop', desc: 'Ongoing optimization, testing, and maturation of your security program.', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' }
 ];
-document.getElementById('methodGrid').innerHTML = methodology.map((m, i) => `<div class="method-card reveal" data-reveal>${i < 4 ? '<div class="method-line hidden lg:block"></div>' : ''}<div class="method-num mb-3">${m.num}</div><div class="why-icon mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.icon}</svg></div><h3 class="display text-lg font-bold mb-2">${m.title}</h3><p class="text-sm leading-relaxed" style="color:var(--text-muted);">${m.desc}</p></div>`).join('');
+const methodGrid = document.getElementById('methodGrid');
+if (methodGrid) {
+    methodGrid.innerHTML = methodology.map((m, i) => `<div class="method-card reveal" data-reveal>${i < 4 ? '<div class="method-line hidden lg:block"></div>' : ''}<div class="method-num mb-3">${m.num}</div><div class="why-icon mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.icon}</svg></div><h3 class="display text-lg font-bold mb-2">${m.title}</h3><p class="text-sm leading-relaxed" style="color:var(--text-muted);">${m.desc}</p></div>`).join('');
+}
 
 /* ===== WHY CYBERNAS ===== */
 const whyCards = [
@@ -132,9 +220,12 @@ const whyCards = [
     { icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>', title: 'Proven Delivery', text: 'Hundreds of successful engagements across financial services, government, healthcare, and energy sectors — with measurable security outcomes.' },
     { icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>', title: 'End-to-End Coverage', text: 'From governance and risk to incident response and recovery — a single partner for the full security lifecycle, eliminating vendor sprawl.' }
 ];
-document.getElementById('whyGrid').innerHTML = whyCards.map((c, i) => `<div class="feature-card rounded-2xl p-6 sm:p-7 reveal" data-reveal><div class="why-icon mb-5"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg></div><h3 class="display text-lg font-bold mb-2">${c.title}</h3><p class="text-sm leading-relaxed" style="color:var(--text-muted);">${c.text}</p></div>`).join('');
+const whyGrid = document.getElementById('whyGrid');
+if (whyGrid) {
+    whyGrid.innerHTML = whyCards.map((c, i) => `<div class="feature-card rounded-2xl p-6 sm:p-7 reveal" data-reveal><div class="why-icon mb-5"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${c.icon}</svg></div><h3 class="display text-lg font-bold mb-2">${c.title}</h3><p class="text-sm leading-relaxed" style="color:var(--text-muted);">${c.text}</p></div>`).join('');
+}
 
-/* ===== TECH TREE (GSAP Animated) ===== */
+/* ===== TECH TREE ===== */
 const treeNodes = [
     { id: 'root', x: 20, y: 330, w: 170, h: 60, label: 'CyberNas Stack', type: 'root', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
     { id: 'secops', x: 330, y: 76, w: 160, h: 48, label: 'Security Ops', type: 'branch', parent: 'root', icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
@@ -152,11 +243,12 @@ const treeNodes = [
     { id: 'pdpl', x: 760, y: 492, w: 180, h: 36, label: 'PDPL', type: 'leaf', parent: 'comp' },
     { id: 'burp', x: 760, y: 572, w: 180, h: 36, label: 'Burp Suite', type: 'leaf', parent: 'assess' },
     { id: 'nessus', x: 760, y: 622, w: 180, h: 36, label: 'Nessus', type: 'leaf', parent: 'assess' },
-    { id: 'metasploit', x: 760, y: 672, w: 180, h: 36, label: 'Metasploit', type: 'leaf', parent: 'assess' },
+    { id: 'metasploit', x: 760, y: 672, w: 180, h: 36, label: 'Metasploit', type: 'leaf', parent: 'assess' }
 ];
 
 function buildTree() {
     const svg = document.getElementById('treeSvg');
+    if (!svg) return;
     let defs = `<defs>
     <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#010ED0"/><stop offset="100%" stop-color="#3a44e8"/></linearGradient>
     <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#010ED0" stop-opacity="0.15"/><stop offset="100%" stop-color="#DEE0FF" stop-opacity="0.1"/></linearGradient>
@@ -171,7 +263,6 @@ function buildTree() {
             const p = treeNodes.find(t => t.id === n.parent);
             const sx = p.x + p.w, sy = p.y + p.h / 2, ex = n.x, ey = n.y + n.h / 2;
             const mx = (sx + ex) / 2;
-
             let delay, duration;
             if (n.parent === 'root') {
                 delay = 0.4 + rootPathCount * 0.1;
@@ -182,7 +273,6 @@ function buildTree() {
                 duration = 0.3;
                 leafPathCount++;
             }
-
             paths += `<path class="tree-path" data-parent="${n.parent}" data-child="${n.id}" d="M ${sx},${sy} C ${mx},${sy} ${mx},${ey} ${ex},${ey}" style="--delay: ${delay.toFixed(2)}s; --duration: ${duration.toFixed(2)}s;"/>`;
         }
     });
@@ -235,37 +325,154 @@ function buildTree() {
     const ring = `<g style="transform-origin:${rootCx}px ${rootCy}px;animation:rotate-slow 40s linear infinite;pointer-events:none;"><circle cx="${rootCx}" cy="${rootCy}" r="50" fill="none" stroke="#010ED0" stroke-width="1" stroke-dasharray="3 6" opacity="0.3"/></g>`;
 
     svg.innerHTML = defs + ring + paths + nodes;
-
-    svg.querySelectorAll('.tree-path').forEach(p => { const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; });
+    svg.querySelectorAll('.tree-path').forEach(p => {
+        try {
+            const len = p.getTotalLength();
+            p.style.strokeDasharray = len;
+            p.style.strokeDashoffset = len;
+        } catch (e) {}
+    });
 }
-
 buildTree();
 
 /* ===== FORM VALIDATION ===== */
-function validateField(input, type) { const v = input.value.trim(); let valid = true; if (type === 'name') valid = /^[A-Za-z\u0600-\u06FF\s]{2,}$/.test(v); else if (type === 'phone') valid = /^[0-9+\-\s()]{7,}$/.test(v); else if (type === 'email') valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); else if (type === 'select') valid = v !== ''; else if (type === 'text') valid = v.length >= 2; else if (type === 'textarea') valid = v.length >= 5; return valid; }
-function showError(name, show, form) { const f = form || document; const input = f.querySelector(`[name="${name}"]`); const err = f.querySelector(`[data-err="${name}"]`); if (!input || !err) return; if (show) { input.classList.add('error'); err.classList.add('show'); } else { input.classList.remove('error'); err.classList.remove('show'); } }
+function validateField(input, type) {
+    if (!input) return false;
+    const v = input.value.trim();
+    let valid = true;
+    if (type === 'name') valid = /^[A-Za-z\u0600-\u06FF\s]{2,}$/.test(v);
+    else if (type === 'phone') valid = /^[0-9+\-\s()]{7,}$/.test(v);
+    else if (type === 'email') valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    else if (type === 'select') valid = v !== '';
+    else if (type === 'text') valid = v.length >= 2;
+    else if (type === 'textarea') valid = v.length >= 5;
+    return valid;
+}
+
+function showError(name, show, form) {
+    const f = form || document;
+    const input = f.querySelector(`[name="${name}"]`);
+    const err = f.querySelector(`[data-err="${name}"]`);
+    if (!input || !err) return;
+    if (show) {
+        input.classList.add('error');
+        err.classList.add('show');
+    } else {
+        input.classList.remove('error');
+        err.classList.remove('show');
+    }
+}
 
 const consultForm = document.getElementById('consultForm');
-consultForm.addEventListener('submit', e => { e.preventDefault(); const vN = validateField(consultForm.fullName, 'name'), vP = validateField(consultForm.phone, 'phone'), vE = validateField(consultForm.email, 'email'), vS = validateField(consultForm.serviceType, 'select'); showError('fullName', !vN, consultForm); showError('phone', !vP, consultForm); showError('email', !vE, consultForm); showError('serviceType', !vS, consultForm); if (vN && vP && vE && vS) document.getElementById('successState').classList.add('show'); });
-document.getElementById('resetForm').addEventListener('click', () => { consultForm.reset(); document.getElementById('successState').classList.remove('show'); });
-consultForm.querySelectorAll('input, select, textarea').forEach(input => { input.addEventListener('blur', () => { if (input.name === 'fullName') showError('fullName', !validateField(input, 'name') && input.value !== '', consultForm); if (input.name === 'phone') showError('phone', !validateField(input, 'phone') && input.value !== '', consultForm); if (input.name === 'email') showError('email', !validateField(input, 'email') && input.value !== '', consultForm); }); input.addEventListener('input', () => { if (input.classList.contains('error')) { const err = consultForm.querySelector(`[data-err="${input.name}"]`); if (err) err.classList.remove('show'); input.classList.remove('error'); } }); });
+const resetFormBtn = document.getElementById('resetForm');
+if (consultForm) {
+    consultForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const vN = validateField(consultForm.fullName, 'name');
+        const vP = validateField(consultForm.phone, 'phone');
+        const vE = validateField(consultForm.email, 'email');
+        const vS = validateField(consultForm.serviceType, 'select');
+        showError('fullName', !vN, consultForm);
+        showError('phone', !vP, consultForm);
+        showError('email', !vE, consultForm);
+        showError('serviceType', !vS, consultForm);
+        if (vN && vP && vE && vS) {
+            const successEl = document.getElementById('successState');
+            if (successEl) successEl.classList.add('show');
+        }
+    });
+    if (resetFormBtn) {
+        resetFormBtn.addEventListener('click', () => {
+            consultForm.reset();
+            const successEl = document.getElementById('successState');
+            if (successEl) successEl.classList.remove('show');
+        });
+    }
+    consultForm.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('blur', () => {
+            if (input.name === 'fullName') showError('fullName', !validateField(input, 'name') && input.value !== '', consultForm);
+            if (input.name === 'phone') showError('phone', !validateField(input, 'phone') && input.value !== '', consultForm);
+            if (input.name === 'email') showError('email', !validateField(input, 'email') && input.value !== '', consultForm);
+        });
+        input.addEventListener('input', () => {
+            if (input.classList.contains('error')) {
+                const err = consultForm.querySelector(`[data-err="${input.name}"]`);
+                if (err) err.classList.remove('show');
+                input.classList.remove('error');
+            }
+        });
+    });
+}
 
 const contactForm = document.getElementById('contactForm');
-contactForm.addEventListener('submit', e => { e.preventDefault(); const vN = validateField(contactForm.cName, 'name'), vE = validateField(contactForm.cEmail, 'email'), vS = validateField(contactForm.cSubject, 'text'), vM = validateField(contactForm.cMessage, 'textarea'); showError('cName', !vN, contactForm); showError('cEmail', !vE, contactForm); showError('cSubject', !vS, contactForm); showError('cMessage', !vM, contactForm); if (vN && vE && vS && vM) document.getElementById('contactSuccess').classList.add('show'); });
-document.getElementById('resetContact').addEventListener('click', () => { contactForm.reset(); document.getElementById('contactSuccess').classList.remove('show'); });
+const resetContactBtn = document.getElementById('resetContact');
+if (contactForm) {
+    contactForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const vN = validateField(contactForm.cName, 'name');
+        const vE = validateField(contactForm.cEmail, 'email');
+        const vS = validateField(contactForm.cSubject, 'text');
+        const vM = validateField(contactForm.cMessage, 'textarea');
+        showError('cName', !vN, contactForm);
+        showError('cEmail', !vE, contactForm);
+        showError('cSubject', !vS, contactForm);
+        showError('cMessage', !vM, contactForm);
+        if (vN && vE && vS && vM) {
+            const contactSuccessEl = document.getElementById('contactSuccess');
+            if (contactSuccessEl) contactSuccessEl.classList.add('show');
+        }
+    });
+    if (resetContactBtn) {
+        resetContactBtn.addEventListener('click', () => {
+            contactForm.reset();
+            const contactSuccessEl = document.getElementById('contactSuccess');
+            if (contactSuccessEl) contactSuccessEl.classList.remove('show');
+        });
+    }
+}
 
-/* ===== SCROLL TO TOP ===== */
+/* ===== UNIFIED THROTTLED SCROLL MANAGER ===== */
 const scrollTopBtn = document.getElementById('scrollTop');
-window.addEventListener('scroll', () => { if (window.scrollY > 600) scrollTopBtn.classList.add('visible'); else scrollTopBtn.classList.remove('visible'); }, { passive: true });
-scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
 
-/* ===== NAV ACTIVE ===== */
 const navLinks = document.querySelectorAll('.nav-link');
 const sectionIds = ['home', 'about', 'what-we-do', 'services', 'solutions', 'methodology', 'tech-stack', 'contact'];
-window.addEventListener('scroll', () => { let cur = 'home'; sectionIds.forEach(id => { const s = document.getElementById(id); if (s && s.getBoundingClientRect().top <= 120) cur = id; }); navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur)); }, { passive: true });
+const cachedSections = sectionIds.map(id => ({ id, el: document.getElementById(id) })).filter(s => s.el);
 
-/* ===== NATIVE SCROLL ANIMATIONS (IntersectionObserver & CSS Transitions) ===== */
-// Reveal animations observer
+let isScrollTicking = false;
+function onScrollFrame() {
+    const scrollY = window.scrollY;
+    
+    // 1. Scroll To Top Visibility
+    if (scrollTopBtn) {
+        if (scrollY > 600) scrollTopBtn.classList.add('visible');
+        else scrollTopBtn.classList.remove('visible');
+    }
+    
+    // 2. Nav Active Highlight
+    let cur = 'home';
+    for (let i = 0; i < cachedSections.length; i++) {
+        if (cachedSections[i].el.getBoundingClientRect().top <= 120) {
+            cur = cachedSections[i].id;
+        }
+    }
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+
+    isScrollTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!isScrollTicking) {
+        window.requestAnimationFrame(onScrollFrame);
+        isScrollTicking = true;
+    }
+}, { passive: true });
+
+/* ===== NATIVE SCROLL ANIMATIONS (IntersectionObserver) ===== */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -273,17 +480,13 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
             observer.unobserve(entry.target);
         }
     });
-}, {
-    rootMargin: '0px 0px -15% 0px'
-});
+}, { rootMargin: '0px 0px -15% 0px' });
 
-// Initialize reveals
 document.querySelectorAll('[data-reveal]').forEach(el => {
-    if (el.closest('#home')) {
-        // Animate hero immediately with delay
-        setTimeout(() => {
-            el.classList.add('revealed');
-        }, 150);
+    if (prefersReducedMotion) {
+        el.classList.add('revealed');
+    } else if (el.closest('#home')) {
+        setTimeout(() => { el.classList.add('revealed'); }, 150);
     } else {
         revealObserver.observe(el);
     }
@@ -291,22 +494,27 @@ document.querySelectorAll('[data-reveal]').forEach(el => {
 
 // Counter count-up helper
 function animateCount(el, target, duration) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = target + '+';
+        return;
+    }
+    if (el._animId) cancelAnimationFrame(el._animId);
     let startTime = null;
     function step(timestamp) {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
-        const easeProgress = progress * (2 - progress); // easeOutQuad
+        const easeProgress = progress * (2 - progress);
         el.textContent = Math.floor(target * easeProgress) + '+';
         if (progress < 1) {
-            requestAnimationFrame(step);
+            el._animId = requestAnimationFrame(step);
         } else {
             el.textContent = target + '+';
+            el._animId = null;
         }
     }
-    requestAnimationFrame(step);
+    el._animId = requestAnimationFrame(step);
 }
 
-// Counter observer
 const counterObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -318,9 +526,7 @@ const counterObserver = new IntersectionObserver((entries, observer) => {
             observer.unobserve(el);
         }
     });
-}, {
-    rootMargin: '0px 0px -15% 0px'
-});
+}, { rootMargin: '0px 0px -15% 0px' });
 
 document.querySelectorAll('.counter-num').forEach(el => {
     counterObserver.observe(el);
@@ -338,19 +544,62 @@ const treeObserver = new IntersectionObserver((entries, observer) => {
             observer.unobserve(svg);
         }
     });
-}, {
-    rootMargin: '0px 0px -40% 0px'
-});
+}, { rootMargin: '0px 0px -40% 0px' });
 
 const treeSvg = document.getElementById('treeSvg');
 if (treeSvg) {
-    treeObserver.observe(treeSvg);
+    if (prefersReducedMotion) {
+        treeSvg.classList.add('active');
+    } else {
+        treeObserver.observe(treeSvg);
+    }
 }
 
-/* ===== MAGNETIC ===== */
-document.querySelectorAll('.magnetic').forEach(btn => { btn.addEventListener('mousemove', e => { const r = btn.getBoundingClientRect(); btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.2}px,${(e.clientY - r.top - r.height / 2) * 0.3}px)`; }); btn.addEventListener('mouseleave', () => btn.style.transform = ''); });
+/* ===== OPTIMIZED MAGNETIC BUTTONS ===== */
+document.querySelectorAll('.magnetic').forEach(btn => {
+    if (prefersReducedMotion) return;
+    let rect = null;
+    let isTicking = false;
+    let mouseX = 0, mouseY = 0;
+
+    btn.addEventListener('mouseenter', () => {
+        rect = btn.getBoundingClientRect();
+    });
+
+    btn.addEventListener('mousemove', e => {
+        if (!rect) rect = btn.getBoundingClientRect();
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        if (!isTicking) {
+            window.requestAnimationFrame(() => {
+                if (rect) {
+                    const tx = (mouseX - rect.left - rect.width / 2) * 0.2;
+                    const ty = (mouseY - rect.top - rect.height / 2) * 0.3;
+                    btn.style.transform = `translate(${tx}px, ${ty}px)`;
+                }
+                isTicking = false;
+            });
+            isTicking = true;
+        }
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        rect = null;
+        btn.style.transform = '';
+    });
+});
 
 /* ===== SMOOTH SCROLL ===== */
-document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', function (e) { const target = document.querySelector(this.getAttribute('href')); if (target) { e.preventDefault(); const y = target.getBoundingClientRect().top + window.pageYOffset - 70; window.scrollTo({ top: y, behavior: 'smooth' }); } }); });
-
-
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            const y = target.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    });
+});
