@@ -20,32 +20,10 @@
         transition: none !important;
     }
 
-    .tree-node {
-        opacity: 1 !important;
-        transform: scale(1) !important;
-        -webkit-transform: scale(1) !important;
-        transition: none !important;
-    }
-
-    .tree-path {
-        stroke-dashoffset: 0 !important;
-        opacity: 0.35 !important;
-        transition: none !important;
-    }
-
-    .particle,
-    .glow-blob,
-    .scan-line {
-        opacity: 0.12 !important;
-        -webkit-animation: none !important;
-        animation: none !important;
-    }
-
     .net-node,
     .illu-anim,
     .check-circle,
-    .video-play-btn,
-    .tree-path.flow {
+    .video-play-btn {
         -webkit-animation: none !important;
         animation: none !important;
     }
@@ -1527,6 +1505,9 @@ select.form-input {
     background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, transparent 60%);
     z-index: 1;
     pointer-events: none;
+    -webkit-transition: opacity .4s ease;
+    -o-transition: opacity .4s ease;
+    transition: opacity .4s ease;
 }
 
 /* === Solutions Cards === */
@@ -1675,77 +1656,7 @@ select.form-input {
     }
 }
 
-/* === Tree === */
-.tree-container {
-    position: relative;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 1rem;
-}
 
-.tree-svg {
-    min-width: 800px;
-    width: 100%;
-    height: auto;
-}
-
-.tree-node {
-    cursor: pointer;
-    -webkit-transition: opacity var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), -webkit-filter .3s, -webkit-transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s);
-    transition: opacity var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), -webkit-filter .3s, -webkit-transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s);
-    -o-transition: filter .3s, opacity var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s);
-    transition: filter .3s, opacity var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s);
-    transition: filter .3s, opacity var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s), -webkit-filter .3s, -webkit-transform var(--duration, 0.4s) var(--ease, ease) var(--delay, 0s);
-    opacity: 0;
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-}
-
-#treeSvg.active .tree-node {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-}
-
-.tree-node:hover {
-    -webkit-filter: drop-shadow(0 0 12px rgba(1, 14, 208, .5));
-    filter: drop-shadow(0 0 12px rgba(1, 14, 208, .5));
-}
-
-.tree-path {
-    fill: none;
-    stroke: var(--cn-blue);
-    stroke-width: 1.5;
-    opacity: .35;
-    -webkit-transition: stroke-dashoffset var(--duration, 0.5s) cubic-bezier(0.25, 1, 0.5, 1) var(--delay, 0s);
-    -o-transition: stroke-dashoffset var(--duration, 0.5s) cubic-bezier(0.25, 1, 0.5, 1) var(--delay, 0s);
-    transition: stroke-dashoffset var(--duration, 0.5s) cubic-bezier(0.25, 1, 0.5, 1) var(--delay, 0s);
-}
-
-#treeSvg.active .tree-path {
-    stroke-dashoffset: 0;
-}
-
-.tree-path.flow {
-    stroke-dasharray: 6 4;
-    -webkit-animation: flow 2s linear infinite;
-    animation: flow 2s linear infinite;
-}
-
-@-webkit-keyframes flow {
-    to {
-        stroke-dashoffset: -20;
-    }
-}
-
-@keyframes flow {
-    to {
-        stroke-dashoffset: -20;
-    }
-}
 
 @-webkit-keyframes rotate-slow {
     from {
@@ -1771,22 +1682,7 @@ select.form-input {
     }
 }
 
-/* === Small Shield Scanner === */
-@-webkit-keyframes scanLaserSmall {
 
-    0%,
-    100% {
-        -webkit-transform: translateY(-10px);
-        transform: translateY(-10px);
-        opacity: 0.2;
-    }
-
-    50% {
-        -webkit-transform: translateY(10px);
-        transform: translateY(10px);
-        opacity: 0.95;
-    }
-}
 
 @keyframes scanLaserSmall {
 
