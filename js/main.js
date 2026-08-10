@@ -133,7 +133,7 @@ const svcTags = document.getElementById('serviceTags');
 
 function renderServiceList() {
     if (svcList) {
-        svcList.innerHTML = services.map((s, i) => `<div class="service-item ${i === 0 ? 'active' : ''}" data-idx="${i}" role="button" tabindex="0"><span class="service-num">${String(i + 1).padStart(2, '0')}</span><span class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span><span class="flex-1"><span class="font-semibold text-sm block">${s.name}</span><span class="text-xs" style="color:var(--text-muted);">${s.short}</span></span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.5;"><polyline points="9 18 15 12 9 6"/></svg></div>`).join('');
+        svcList.innerHTML = services.map((s, i) => `<div class="service-item ${i === 0 ? 'active' : ''} flex-1 min-w-[280px]" data-idx="${i}" role="button" tabindex="0"><span class="service-num">${String(i + 1).padStart(2, '0')}</span><span class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span><span class="flex-1 text-left"><span class="font-semibold text-sm block">${s.name}</span><span class="text-xs" style="color:var(--text-muted);">${s.short}</span></span></div>`).join('');
         svcList.querySelectorAll('.service-item').forEach(item => {
             item.addEventListener('click', () => selectService(parseInt(item.dataset.idx)));
             item.addEventListener('keydown', e => {

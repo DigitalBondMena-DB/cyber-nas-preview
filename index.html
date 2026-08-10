@@ -360,9 +360,9 @@
                 <p class="text-base reveal" data-reveal style="color:var(--text-muted);">Select a service to explore how
                     CyberNas delivers it.</p>
             </div>
-            <div class="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-                <!-- LEFT COLUMN: Desktop List / Mobile Dropdown -->
-                <div class="lg:col-span-5 flex flex-col justify-between reveal-l" data-reveal>
+            <div class="flex flex-col gap-6 lg:gap-8 items-stretch">
+                <!-- TOP COLUMN: Desktop Tabs / Mobile Dropdown -->
+                <div class="w-full flex flex-col justify-between reveal-l" data-reveal>
                     <!-- Mobile View Dropdown -->
                     <div class="block lg:hidden w-full mb-4">
                         <label for="mobileServiceSelect" class="text-xs font-semibold block mb-2"
@@ -373,17 +373,17 @@
                         </div>
                     </div>
 
-                    <!-- Desktop View List (hidden on mobile, scrollable on desktop) -->
-                    <div class="hidden lg:flex flex-col glass rounded-2xl p-3 h-full w-full overflow-hidden">
-                        <div id="serviceList" class="flex flex-col  gap-2 overflow-y-auto h-full pr-1">
+                    <!-- Desktop View Tabs (hidden on mobile, scrollable horizontally on desktop) -->
+                    <div class="hidden lg:flex flex-row glass rounded-2xl p-3 w-full overflow-hidden">
+                        <div id="serviceList" class="flex flex-row gap-2 overflow-x-auto w-full pb-1">
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN: Service Details Card -->
-                <div class="lg:col-span-7 reveal-r w-full" data-reveal>
+                <!-- BOTTOM COLUMN: Service Details Card -->
+                <div class="w-full reveal-r" data-reveal>
                     <div
-                        class="glass rounded-2xl p-6 lg:p-8 relative overflow-hidden h-auto lg:min-h-[520px] py-2 flex flex-col justify-center">
+                        class="glass rounded-2xl p-6 lg:p-8 relative overflow-hidden h-auto lg:min-h-[460px] py-2 flex flex-col justify-center">
                         <div class="cyber-grid absolute inset-0" style="opacity:.4;"></div>
                         <div class="scan-line"></div>
                         <div class="relative z-10 flex flex-col items-center justify-center">
@@ -437,7 +437,8 @@
             <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
                 <div>
                     <div class="section-label mb-5 reveal" data-reveal>Contact Us</div>
-                    <h2 class="section-title display mb-5 reveal" data-reveal>Let's talk about your security posture.
+                    <h2 class="section-title display mb-5 reveal" data-reveal>
+                        Let's talk about your security
                     </h2>
                     <p class="text-base leading-relaxed mb-7 reveal" data-reveal style="color:var(--text-muted);">
                         Connect with CyberNas to secure your digital assets.</p>
@@ -608,7 +609,7 @@
                     <span class="display font-bold text-xl" style="display:none;color:var(--cn-blue);">CYBER<span
                             style="color:var(--text);">NAS</span></span>
                     <p class="text-sm leading-relaxed" style="color:var(--text-muted);">Enterprise cybersecurity,
-                        compliance, and cloud security — engineered for the modern threat landscape.</p>
+                        compliance, and cloud security, engineered for the modern threat landscape.</p>
                 </div>
                 <div>
                     <h4 class="text-sm font-semibold mb-4 display">Quick Links</h4>
@@ -628,7 +629,7 @@
                         <li><a href="#services" class="footer-link">Training Programs</a></li>
                         <li><a href="#services" class="footer-link">Consultancy</a></li>
                         <li><a href="#services" class="footer-link">Cybersecurity Solutions</a></li>
-                       
+
                     </ul>
                 </div>
                 <div>
@@ -665,7 +666,9 @@
             </div>
             <div class="pt-7 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
                 style="border-color:var(--border);color:var(--text-muted);">
-                <div>© 2026 CyberNas. All Rights Reserved. Designed &amp; Developed by Digital Bond</div>
+                <div>© 2026 CyberNas. All Rights Reserved. Designed &amp; Developed by <img src="./images/image.png"
+                        loading="lazy" decoding="async" alt="techhouse" width="40" height="40" class="inline-block" />
+                </div>
                 <div class="flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full"
                         style="background:#10b981;box-shadow:0 0 8px #10b981;"></span>All systems operational</div>
             </div>

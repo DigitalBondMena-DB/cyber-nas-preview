@@ -512,10 +512,10 @@ h4,
     -webkit-transition: all .3s;
     -o-transition: all .3s;
     transition: all .3s;
-    border-left: 3px solid transparent;
+    border-bottom: 3px solid transparent;
     padding: 14px 16px;
-    -webkit-border-radius: 0 12px 12px 0;
-    border-radius: 0 12px 12px 0;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -524,6 +524,10 @@ h4,
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     gap: 14px;
 }
 
@@ -532,7 +536,7 @@ h4,
 }
 
 .service-item.active {
-    border-left-color: var(--cn-blue);
+    border-bottom-color: var(--cn-blue);
     background: var(--accent-glow);
 }
 
