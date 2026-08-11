@@ -93,13 +93,36 @@ if (videoPlayBtn && videoPoster && videoPlayer) {
             if (videoText) videoText.style.display = 'none';
             if (videoOverlayGrad) videoOverlayGrad.style.display = 'none';
             videoPlayer.style.display = 'block';
-            videoPlayer.play().catch(() => {});
+            videoPlayer.play().catch(() => { });
         }, 400);
     });
 }
 
 /* ===== SERVICES ===== */
-const services = [
+const isArabic = document.documentElement.lang === 'ar';
+const services = isArabic ? [
+    {
+        name: 'البرامج التدريبية',
+        short: 'بناء القدرات وصقل المهارات',
+        tags: ['الأمن السيبراني وحماية البيانات', 'معهد SANS', 'برنامج مايكروسوفت التدريبي', 'تدريب إدارة المخاطر وفق ISO', 'البرمجة الآمنة بأسلوب اللعب (Gamified)'],
+        desc: 'برامجنا التدريبية مصمَّمة لاستقبال المتعلمين في كل المراحل، من المبتدئين إلى المحترفين الذين يريدون تعزيز مهاراتهم المتقدمة.',
+        icon: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'
+    },
+    {
+        name: 'الاستشارات',
+        short: 'استشارات وحماية امنية قبل حدوث المخاطر',
+        tags: ['(DFIR)الاستجابة للحوادث والتحقيق الرقـمي', '(ICS/OT) أمن الأنظمة الصناعية والتشغيلية', '(SoCaaS) خدمات مركزعمليات المدارة '],
+        desc: 'مع تغيّر مشهد التهديدات يوميا، أصبح الأمن السيبراني القوي ضرورة وليس اختيار. استشاراتنا المتخصصة تجهّزك لمقاومة تحديات المستقبل بشكل مسبق ، لكي تضمن أن مستقبلك الرقمي يبقي آمن.',
+        icon: '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>'
+    },
+    {
+        name: 'حلول الأمن السيبراني',
+        short: 'باقة أمنية للمؤسسات مصمَّمة حسب احتياجك',
+        tags: ['أتمتة العمليات الروبوتية (RPA)', 'التصدي لهجمات حجب الخدمة (DDoS)', 'تحسين سحابة AWS'],
+        desc: 'نقدم لك باقة شاملة من خدمات الأمن السيبراني المتطوّرة، مصمَّمة بعناية لتناسب الاحتياجات والتحديات الفريدة لمؤسستك.',
+        icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'
+    }
+] : [
     {
         name: 'Training Programs',
         short: 'Capacity building & skill refinement',
@@ -192,7 +215,14 @@ selectService(0);
 
 
 /* ===== SOLUTIONS ===== */
-const solutions = [
+const solutions = isArabic ? [
+    { title: 'أمن السحابة', desc: 'حماية البيئات السحابية المتعدده عبر ضوابط في البنية التحتية، و الضبط الدقيق، والمراقبة المستمرة.', img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>' },
+    { title: 'الالتزام التنظيمي والحوكمة', desc: 'استيفاء المتطلبات التنظيمية بعمل منظمة ومراقبة مستمرة للضوابط.', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80', icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' },
+    { title: 'عمليات الأمن', desc: 'مراقبة أمنية على مدار الساعة (24/7) عبر مركز العمليات الامنية (SOC)، إكتشاف التهديدات، واستجابة سريعة للحوادث.', img: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
+    { title: 'التدريب والتوعية', desc: 'بناء خط دفاع بشري عبر تدريب مخصص لكل وظيفة و المحاكاة العملية للهجمات والاحتيال', img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80', icon: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>' },
+    { title: 'إدارة المخاطر', desc: 'تحديد المخاطر و التهديدات وتقييمها ومعالجتها قبل التأثير على سير أعمالك', img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+    { title: 'الاستجابة للحوادث', desc: 'استجابة سريعة للاختراقات ، تحقيق رقمي، وتعافٍ عاجل لتقليل توقف العمل لاقل حد ممكن.', img: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=600&q=80', icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' }
+] : [
     { title: 'Cloud Security', desc: 'Protecting multi-cloud environments with architecture, configuration, and monitoring controls.', img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80', icon: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>' },
     { title: 'Compliance & Governance', desc: 'Meeting regulatory requirements with structured frameworks and continuous control monitoring.', img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80', icon: '<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>' },
     { title: 'Security Operations', desc: '24/7 SOC monitoring, threat detection, and rapid incident response capabilities.', img: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
@@ -206,7 +236,13 @@ if (solGrid) {
 }
 
 /* ===== METHODOLOGY ===== */
-const methodology = [
+const methodology = isArabic ? [
+    { num: '01', title: 'اكتشاف', desc: 'تقييم شامل للوضع الأمني الحالي، وأصولك، ومخاطر عملك.', icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
+    { num: '02', title: 'تصميم', desc: 'بنية أمنية وخطة طريق مصمَّمة حسب أهدافك التجارية.', icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>' },
+    { num: '03', title: 'تنفيذ', desc: 'تطبيق الضوابط الأمنية والأدوات والعمليات في كل بيئتك التقنية.', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+    { num: '04', title: 'دفاع', desc: 'مراقبة مستمرة، واكتشاف للتهديدات، واستجابة سريعة للحوادث على مدار الساعة.', icon: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>' },
+    { num: '05', title: 'تطوير', desc: 'تحسين واختبار وتطوير مستمر لبرنامجك الأمني.', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' }
+] : [
     { num: '01', title: 'Discover', desc: 'Comprehensive assessment of your current security posture, assets, and risks.', icon: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>' },
     { num: '02', title: 'Design', desc: 'Tailored security architecture and roadmap aligned with your business objectives.', icon: '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>' },
     { num: '03', title: 'Deploy', desc: 'Implementation of security controls, tools, and processes across your environment.', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
@@ -223,7 +259,7 @@ if (methodGrid) {
 function validateField(input, type) {
     if (!input) return { valid: false, msg: '' };
     const v = input.value.trim();
-    
+
     if (type === 'name') {
         if (v === '') return { valid: false, msg: 'Name is required.' };
         if (v.length < 3) return { valid: false, msg: 'Min 3 characters required.' };
@@ -394,13 +430,13 @@ const cachedSections = sectionIds.map(id => ({ id, el: document.getElementById(i
 let isScrollTicking = false;
 function onScrollFrame() {
     const scrollY = window.scrollY;
-    
+
     // 1. Scroll To Top Visibility
     if (scrollTopBtn) {
         if (scrollY > 600) scrollTopBtn.classList.add('visible');
         else scrollTopBtn.classList.remove('visible');
     }
-    
+
     // 2. Nav Active Highlight
     let cur = 'home';
     for (let i = 0; i < cachedSections.length; i++) {
