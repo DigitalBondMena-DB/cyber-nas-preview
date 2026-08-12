@@ -261,35 +261,35 @@ function validateField(input, type) {
     const v = input.value.trim();
 
     if (type === 'name') {
-        if (v === '') return { valid: false, msg: 'Name is required.' };
-        if (v.length < 3) return { valid: false, msg: 'Min 3 characters required.' };
-        if (!/^[A-Za-z\u0600-\u06FF\s]+$/.test(v)) return { valid: false, msg: 'Letters and spaces only.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'الاسم مطلوب.' : 'Name is required.' };
+        if (v.length < 3) return { valid: false, msg: isArabic ? 'يرجى إدخال 3 أحرف على الأقل.' : 'Min 3 characters required.' };
+        if (!/^[A-Za-z\u0600-\u06FF\s]+$/.test(v)) return { valid: false, msg: isArabic ? 'أحرف ومسافات فقط.' : 'Letters and spaces only.' };
         return { valid: true, msg: '' };
     }
     if (type === 'phone') {
-        if (v === '') return { valid: false, msg: 'Phone number is required.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'رقم الهاتف مطلوب.' : 'Phone number is required.' };
         const cleanNum = v.replace(/[^0-9\u0660-\u0669\u06f0-\u06f9]/g, '');
-        if (cleanNum.length < 7) return { valid: false, msg: 'Min 7 digits required.' };
-        if (!/^[0-9+\-\s()\u0660-\u0669\u06f0-\u06f9]+$/.test(v)) return { valid: false, msg: 'Please enter a valid phone number.' };
+        if (cleanNum.length < 7) return { valid: false, msg: isArabic ? 'يرجى إدخال 7 أرقام على الأقل.' : 'Min 7 digits required.' };
+        if (!/^[0-9+\-\s()\u0660-\u0669\u06f0-\u06f9]+$/.test(v)) return { valid: false, msg: isArabic ? 'يرجى إدخال رقم هاتف صحيح.' : 'Please enter a valid phone number.' };
         return { valid: true, msg: '' };
     }
     if (type === 'email') {
-        if (v === '') return { valid: false, msg: 'Email address is required.' };
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return { valid: false, msg: 'Please enter a valid email address.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'البريد الإلكتروني مطلوب.' : 'Email address is required.' };
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return { valid: false, msg: isArabic ? 'يرجى إدخال بريد إلكتروني صحيح.' : 'Please enter a valid email address.' };
         return { valid: true, msg: '' };
     }
     if (type === 'select') {
-        if (v === '') return { valid: false, msg: 'Please select a service.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'يرجى اختيار خدمة.' : 'Please select a service.' };
         return { valid: true, msg: '' };
     }
     if (type === 'text') {
-        if (v === '') return { valid: false, msg: 'Subject is required.' };
-        if (v.length < 3) return { valid: false, msg: 'Min 3 characters required.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'الموضوع مطلوب.' : 'Subject is required.' };
+        if (v.length < 3) return { valid: false, msg: isArabic ? 'يرجى إدخال 3 أحرف على الأقل.' : 'Min 3 characters required.' };
         return { valid: true, msg: '' };
     }
     if (type === 'textarea') {
-        if (v === '') return { valid: false, msg: 'Message is required.' };
-        if (v.length < 5) return { valid: false, msg: 'Min 5 characters required.' };
+        if (v === '') return { valid: false, msg: isArabic ? 'الرسالة مطلوبة.' : 'Message is required.' };
+        if (v.length < 5) return { valid: false, msg: isArabic ? 'يرجى إدخال 5 أحرف على الأقل.' : 'Min 5 characters required.' };
         return { valid: true, msg: '' };
     }
     return { valid: true, msg: '' };
@@ -324,11 +324,13 @@ if (consultForm) {
         const resP = validateField(consultForm.phone, 'phone');
         const resE = validateField(consultForm.email, 'email');
         const resS = validateField(consultForm.serviceType, 'select');
+        const resM = validateField(consultForm.message, 'textarea');
         showError('fullName', resN, consultForm);
         showError('phone', resP, consultForm);
         showError('email', resE, consultForm);
         showError('serviceType', resS, consultForm);
-        if (resN.valid && resP.valid && resE.valid && resS.valid) {
+        showError('message', resM, consultForm);
+        if (resN.valid && resP.valid && resE.valid && resS.valid && resM.valid) {
             const successEl = document.getElementById('successState');
             if (successEl) successEl.classList.add('show');
         }
@@ -348,6 +350,7 @@ if (consultForm) {
             if (input.name === 'phone') showError('phone', validateField(input, 'phone'), consultForm);
             if (input.name === 'email') showError('email', validateField(input, 'email'), consultForm);
             if (input.name === 'serviceType') showError('serviceType', validateField(input, 'select'), consultForm);
+            if (input.name === 'message') showError('message', validateField(input, 'textarea'), consultForm);
         });
         input.addEventListener('input', () => {
             if (input.name === 'fullName') input.value = input.value.replace(/[\d\u0660-\u0669\u06f0-\u06f9]/g, '');
@@ -357,6 +360,7 @@ if (consultForm) {
             else if (input.name === 'phone') type = 'phone';
             else if (input.name === 'email') type = 'email';
             else if (input.name === 'serviceType') type = 'select';
+            else if (input.name === 'message') type = 'textarea';
             if (type) {
                 showError(input.name, validateField(input, type), consultForm);
             }

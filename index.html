@@ -237,10 +237,15 @@
                                     </svg><span class="err-text">Please select a service.</span></div>
                             </div>
                             <div class="mt-4">
-                                <label class="text-xs font-medium block mb-1.5" style="color:var(--text-muted);">Message
-                                    <span style="opacity:.6;">(optional)</span></label>
+                                <label class="text-xs font-medium block mb-1.5" style="color:var(--text-muted);">Message *</label>
                                 <textarea name="message" rows="3" class="form-input resize-none"
                                     placeholder="Tell us briefly about your needs…"></textarea>
+                                <div class="err-msg" data-err="message"><svg width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="12" />
+                                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                                    </svg><span class="err-text">Message is required.</span></div>
                             </div>
                             <button type="submit"
                                 class="btn-primary w-full mt-5 py-3.5 rounded-lg font-semibold text-sm magnetic flex items-center justify-center gap-2">Submit
