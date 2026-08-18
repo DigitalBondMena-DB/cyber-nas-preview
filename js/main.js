@@ -319,7 +319,7 @@ const consultForm = document.getElementById('consultForm');
 const resetFormBtn = document.getElementById('resetForm');
 if (consultForm) {
     consultForm.addEventListener('submit', e => {
-        e.preventDefault();
+
         const resN = validateField(consultForm.fullName, 'name');
         const resP = validateField(consultForm.phone, 'phone');
         const resE = validateField(consultForm.email, 'email');
@@ -333,6 +333,8 @@ if (consultForm) {
         if (resN.valid && resP.valid && resE.valid && resS.valid && resM.valid) {
             const successEl = document.getElementById('successState');
             if (successEl) successEl.classList.add('show');
+        } else {
+            e.preventDefault();
         }
     });
     if (resetFormBtn) {
@@ -372,7 +374,7 @@ const contactForm = document.getElementById('contactForm');
 const resetContactBtn = document.getElementById('resetContact');
 if (contactForm) {
     contactForm.addEventListener('submit', e => {
-        e.preventDefault();
+
         const resN = validateField(contactForm.cName, 'name');
         const resE = validateField(contactForm.cEmail, 'email');
         const resP = validateField(contactForm.cPhone, 'phone');
@@ -386,6 +388,8 @@ if (contactForm) {
         if (resN.valid && resE.valid && resP.valid && resS.valid && resM.valid) {
             const contactSuccessEl = document.getElementById('contactSuccess');
             if (contactSuccessEl) contactSuccessEl.classList.add('show');
+        } else {
+            e.preventDefault();
         }
     });
     if (resetContactBtn) {
